@@ -7,14 +7,19 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
+fastapi = "^0.110.1"
+uvicorn = {extras = ["standart"], version = "^0.29.0"}
+redis-om = "^0.2.2"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.1.1"
 black = "^24.4.0"
-isort = "^5.13.2"
+isort = { extras = ["pipfile_deprecated_finder2"], version = "^5.13.2" }
+
 flake8 = "^7.0.0"
 pre-commit = "^3.7.0"
+
 
 [build-system]
 requires = ["poetry-core"]
@@ -33,5 +38,5 @@ extend-exclude = '''
 [tool.isort]
 profile = 'black'
 line_length = 120
-known_local_folder = ["app"]
+#known_local_folder = ["app"]
 honor_noqa = true
