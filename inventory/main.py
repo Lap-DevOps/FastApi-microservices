@@ -29,7 +29,17 @@ app.add_middleware(
 
 @app.get("/products/")
 async def all_products():
-    return Product.all_pks()
+    return [format(pk) for pk in Product.all_pks()]
+
+
+def format(pk: str):
+    product = Product.get(pk)
+    return {
+        "id": product.pk,
+        "name": product.name,
+        "price": product.price,
+        "quantity_available": product.quantity_available,
+    }
 
 
 @app.post("/products/")
