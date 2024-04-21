@@ -1,5 +1,6 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from redis_om import NotFoundError
 
 from inventory.models import Product, ProductCreate
 
@@ -29,10 +30,10 @@ app.add_middleware(
 
 @app.get("/products/")
 async def all_products():
-    return [format(pk) for pk in Product.all_pks()]
+    return [format_product(pk) for pk in Product.all_pks()]
 
 
-def format(pk: str):
+def format_product(pk: str):
     product = Product.get(pk)
     return {
         "id": product.pk,
@@ -44,7 +45,12 @@ def format(pk: str):
 
 @app.get("/products/{product_id}")
 async def get_product(product_id: str):
-    return Product.get(product_id)
+    try:
+        product = Product.get(product_id)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    return product
 
 
 @app.post("/products/")
@@ -55,4 +61,8 @@ async def get_one_product(product: ProductCreate):
 
 @app.delete("/products/{product_id}")
 async def delete_product(product_id: str):
-    return Product.delete(product_id)
+    try:
+        Product.delete(product_id)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="Product not found")
+    return {"status": "success"}
