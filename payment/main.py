@@ -1,8 +1,10 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.background import BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
 from payment.models import Order, OrderCreate
 from payment.product_client import product_client
+from payment.redis_conn import redis
 
 app = FastAPI()
 
@@ -29,7 +31,7 @@ app.add_middleware(
 
 
 @app.post("/orders")
-async def create_order(order: OrderCreate):
+async def create_order(order: OrderCreate, background_tasks: BackgroundTasks):
     product = await product_client.get_product(order.product_id)
     if "Product not found" in product.values():
         raise HTTPException(status_code=404, detail="Product not found")
@@ -43,7 +45,7 @@ async def create_order(order: OrderCreate):
     )
     order.save()
 
-    order_status_completed(order)
+    background_tasks.add_task(order_status_completed, order)
 
     return order.save()
 
@@ -69,3 +71,4 @@ def format_orders(pk: str):
 def order_status_completed(order: Order):
     order.status = "completed"
     order.save()
+    redis.xadd("order_completed", order.dict(), "*")

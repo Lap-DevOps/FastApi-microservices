@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from redis_om import HashModel
 
-from payment.redis import redis
+from payment.redis_conn import redis
 
 
 class Order(HashModel):

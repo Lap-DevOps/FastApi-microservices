@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from redis_om import HashModel
 
-from inventory.redis import redis
+from inventory.redis_conn import redis
 
 
 class Product(HashModel):
