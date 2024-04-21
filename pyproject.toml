@@ -41,3 +41,4 @@ profile = 'black'
 line_length = 120
 #known_local_folder = ["app"]
 honor_noqa = true
+known_third_party = ["fastapi", "pydantic", "starlette"]
