@@ -42,7 +42,17 @@ def format(pk: str):
     }
 
 
+@app.get("/products/{product_id}")
+async def get_product(product_id: str):
+    return Product.get(product_id)
+
+
 @app.post("/products/")
-async def add_product(product: ProductCreate):
+async def get_one_product(product: ProductCreate):
     new_product = Product(**product.model_dump())
     return new_product.save()
+
+
+@app.delete("/products/{product_id}")
+async def delete_product(product_id: str):
+    return Product.delete(product_id)
