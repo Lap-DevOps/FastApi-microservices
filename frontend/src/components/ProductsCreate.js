@@ -11,6 +11,7 @@ const ProductsCreate = () => {
 
   const navigate = useNavigate();
 
+
   const onClick = async () => {
     try {
       await ProductsService.create(name, price, quantity);

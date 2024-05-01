@@ -10,7 +10,7 @@ const Dashboard = (props) => {
           className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3  border-bottom"
           bis_skin_checked="1"
         >
-          <h1 className="h2">Orders Dashboard</h1>
+          <h1 className="h2">Welcome to Dashboard</h1>
           <div className="btn-toolbar mb-2 mb-md-0" bis_skin_checked="1">
             <div className="btn-group me-2" bis_skin_checked="1">
               <Link
@@ -23,7 +23,7 @@ const Dashboard = (props) => {
           </div>
         </div>
 
-        <h2>Oders:</h2>
+
         {props.children}
         <Products />
       </main>

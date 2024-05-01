@@ -16,6 +16,7 @@ const Products = () => {
 
   return (
     <div>
+      <h2>Products:</h2>
       <div className="table-responsive small" bis_skin_checked="1">
         <table className="table table-striped table-sm">
           <thead>

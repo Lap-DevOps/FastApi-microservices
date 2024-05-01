@@ -37,7 +37,7 @@ const Sidebar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link d-flex align-items-center gap-2" to="/">
+              <Link className="nav-link d-flex align-items-center gap-2" to="/orders/">
                 Orders
               </Link>
             </li>
